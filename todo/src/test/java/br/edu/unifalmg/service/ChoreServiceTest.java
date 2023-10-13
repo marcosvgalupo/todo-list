@@ -264,4 +264,24 @@ public class ChoreServiceTest {
         );
     }
 
+    @Test
+    @DisplayName("#printChores > When the list is empty > Throw exception")
+    void printAllChoresWhenTheListIsEmptyThrowAnException(){
+        ChoreService service = new ChoreService();
+        assertThrows(EmptyChoreListException.class, ()-> service.printAllChores());
+    }
+
+    @Test
+    @DisplayName("#printChores > When the list is not empty > Print the descriptions")
+    void printAllChoresWhenTheListIsNotEmptyPrintTheDescriptions(){
+        ChoreService service = new ChoreService();
+        service.addChore("Chore 1",LocalDate.now().plusDays(3));
+        service.addChore("Chore 2",LocalDate.now().plusDays(2));
+        service.addChore("Chore 3",LocalDate.now().plusDays(1));
+        assertEquals("Description: Example 1 - Deadline: 2023-10-08 - Status: Incomplete\n" +
+                        "Description: Example 2 - Deadline: 2023-10-07 - Status: Incomplete\n" +
+                        "Description: Example 3 - Deadline: 2023-10-06 - Status: Incomplete\n",
+                service.printAllChores());
+    }
+
 }
